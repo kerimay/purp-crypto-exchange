@@ -1,5 +1,5 @@
-# erc20-exchange
-ERC20 exchange capstone project
+# Purp Crypto Exchange
+ERC20 token exchange capstone project
 
 # Getting Started with Create React App
 
