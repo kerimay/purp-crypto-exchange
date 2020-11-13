@@ -10,10 +10,19 @@ contract Exchange {
     uint256 public feePercent;
     address constant ETHER = address(0); // Store Ether in tokens mapping as blank address
     mapping(address => mapping(address => uint256)) public tokens;
+    mapping(uint256 => _Order) public orders;
 
     event Deposit(address token, address user, uint256 amount, uint256 balance);
     event Withdraw(address token, address user, uint256 amount, uint256 balance); 
 
+    struct _Order {
+        uint id;
+        address tokenGet;
+        uint amountGet;
+        address tokenGive;
+        uint amountGive;
+        uint timestamp;
+    }
     constructor (address _feeAccount, uint256 _feePercent) public {
         feeAccount = _feeAccount;
         feePercent = _feePercent;
@@ -48,5 +57,9 @@ contract Exchange {
         require(Token(_token).transfer(msg.sender, _amount));
         tokens[_token][msg.sender] = tokens[_token][msg.sender].sub(_amount);
         emit Withdraw(_token, msg.sender, _amount, tokens[_token][msg.sender]);
+    }
+
+    function balanceOf(address _token, address _user) public view returns (uint256) {
+        return tokens[_token][_user];
     }
 }
